@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import UserRegistrationSerializer, CustomTokenObtainPairSerializer,PatientSerializer, DoctorPatientSerializer
+from .serializers import UserRegistrationSerializer, CustomTokenObtainPairSerializer,PatientSerializer, DoctorPatientSerializer,PDFSerializer
 from .models import PDF,Patient, DoctorPatient
 from django.contrib.auth import get_user_model
 

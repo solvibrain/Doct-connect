@@ -1,10 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth import get_user_model
 
-
-User = get_user_model()
 
 # Create your models here.
 
@@ -40,7 +37,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['name']
 
     def __str__(self):
-        return self.email
+        return self.name
 
 
 # Patient Table
@@ -48,7 +45,7 @@ class Patient(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     date_of_birth = models.DateField()
-    doctors = models.ManyToManyField(User, related_name='patients', through='DoctorPatient')
+    doctors = models.ManyToManyField(CustomUser, related_name='patients', through='DoctorPatient')
 
     def __str__(self):
         return self.name
@@ -66,8 +63,8 @@ class PDF(models.Model):
 
  #DoctorPatient table   
 class DoctorPatient(models.Model):
-    doctor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='patients')
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='doctors')
+    doctor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='doctor_patients')
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='patient_doctors')
     date_assigned = models.DateTimeField(auto_now_add=True)
 
     class Meta:
